@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>wealth multiplication via agri land investments - Harsh Gupta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8f9fb;
+      color: #1a2b42;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    /* Main Container Card */
+    .calendly-card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.08), 0 0 1px 0 rgba(0, 0, 0, 0.16);
+      width: 100%;
+      max-width: 960px;
+      min-height: 600px;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ribbon: Powered by Calendly */
+    .ribbon-wrapper {
+      width: 110px;
+      height: 110px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .ribbon {
+      font-size: 9px;
+      text-align: center;
+      transform: rotate(45deg);
+      position: relative;
+      padding: 6px 0 5px 0;
+      top: 22px;
+      right: -22px;
+      width: 145px;
+      background-color: #4d5866;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      line-height: 1.15;
+    }
+
+    .ribbon .ribbon-sub {
+      font-size: 7px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      display: block;
+      font-weight: 600;
+    }
+
+    .ribbon .ribbon-brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Left Column: Meeting Details */
+    .details-column {
+      flex: 1.15;
+      padding: 36px 36px 28px 36px;
+      border-right: 1px solid #eef1f5;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-height: 700px;
+      overflow-y: auto;
+    }
+
+    /* Custom scrollbar for left column */
+    .details-column::-webkit-scrollbar {
+      width: 6px;
+    }
+    .details-column::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .details-column::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 3px;
+    }
+    .details-column::-webkit-scrollbar-thumb:hover {
+      background: #cbd5e1;
+    }
+
+    .details-content {
+      padding-right: 8px;
+    }
+
+    .host-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #5c6c7f;
+      margin-bottom: 8px;
+    }
+
+    .event-title {
+      font-size: 23px;
+      font-weight: 700;
+      color: #0b2541;
+      line-height: 1.28;
+      letter-spacing: -0.2px;
+      margin-bottom: 16px;
+    }
+
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #5c6c7f;
+      margin-bottom: 22px;
+    }
+
+    .duration-badge svg {
+      width: 18px;
+      height: 18px;
+      color: #5c6c7f;
+    }
+
+    .description-section {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: #27374b;
+    }
+
+    .description-section p {
+      margin-bottom: 14px;
+    }
+
+    .description-section .section-header {
+      font-weight: 700;
+      color: #0b2541;
+      margin-top: 14px;
+      margin-bottom: 5px;
+    }
+
+    .description-section ol {
+      margin: 8px 0 14px 20px;
+      padding: 0;
+    }
+
+    .description-section ol li {
+      margin-bottom: 10px;
+      padding-left: 2px;
+    }
+
+    .description-section ol li strong {
+      color: #0b2541;
+    }
+
+    .footer-links {
+      margin-top: 28px;
+      padding-top: 12px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      font-weight: 600;
+      color: #0060e6;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Right Column: Calendar / Booking */
+    .calendar-column {
+      flex: 1.1;
+      padding: 36px 36px 28px 36px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .calendar-header-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #0b2541;
+      margin-bottom: 24px;
+    }
+
+    /* Month Navigator */
+    .month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 22px;
+    }
+
+    .current-month {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0b2541;
+      user-select: none;
+    }
+
+    .nav-arrow {
+      background: none;
+      border: none;
+      color: #0060e6;
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.15s ease;
+      position: absolute;
+    }
+
+    .nav-arrow:hover {
+      background-color: #f1f6fd;
+    }
+
+    .nav-arrow.prev {
+      left: calc(50% - 110px);
+    }
+
+    .nav-arrow.next {
+      right: calc(50% - 110px);
+    }
+
+    .nav-arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2.5;
+    }
+
+    /* Calendar Grid */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      row-gap: 6px;
+      column-gap: 4px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .weekday-header {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #5c6c7f;
+      padding-bottom: 8px;
+      user-select: none;
+      text-transform: capitalize;
+    }
+
+    .calendar-day-cell {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .day-number {
+      font-size: 13.5px;
+      color: #5c6c7f;
+      user-select: none;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    /* Available clickable dates */
+    .day-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background-color: #ebf3ff;
+      color: #0060e6;
+      font-weight: 700;
+      font-size: 13.5px;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+      outline: none;
+    }
+
+    .day-btn:hover {
+      background-color: #0060e6;
+      color: #ffffff;
+    }
+
+    .day-btn.selected {
+      background-color: #0060e6;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 96, 230, 0.35);
+    }
+
+    .day-btn.active-bordered {
+      background-color: #ebf3ff;
+      color: #0060e6;
+      border: 1.5px solid #0060e6;
+    }
+
+    /* Today's indicator dot (e.g., Aug 15) */
+    .has-today-dot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .today-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #0060e6;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 2px;
+    }
+
+    /* Timezone section */
+    .timezone-section {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    .timezone-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0b2541;
+      margin-bottom: 6px;
+    }
+
+    .timezone-dropdown-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #0b2541;
+      cursor: pointer;
+      padding: 4px 0;
+      user-select: none;
+      transition: color 0.15s ease;
+    }
+
+    .timezone-dropdown-trigger:hover {
+      color: #0060e6;
+    }
+
+    .timezone-dropdown-trigger svg.globe-icon {
+      width: 15px;
+      height: 15px;
+      color: #0b2541;
+    }
+
+    .timezone-dropdown-trigger svg.caret-icon {
+      width: 10px;
+      height: 10px;
+      color: #0b2541;
+      margin-left: 2px;
+    }
+
+    /* Timeslot panel when date clicked */
+    .slots-modal {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 0;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .slots-modal.active {
+      display: block;
+    }
+
+    .slots-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b2541;
+      margin-bottom: 10px;
+    }
+
+    .slots-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .time-slot-btn {
+      width: 100%;
+      padding: 9px;
+      border: 1px solid #0060e6;
+      border-radius: 4px;
+      background: #ffffff;
+      color: #0060e6;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .time-slot-btn:hover {
+      background-color: #0060e6;
+      color: #ffffff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+      .calendly-card {
+        flex-direction: column;
+        min-height: auto;
+      }
+      .details-column {
+        border-right: none;
+        border-bottom: 1px solid #eef1f5;
+        max-height: none;
+        padding: 28px 24px;
+      }
+      .calendar-column {
+        padding: 28px 24px;
+      }
+      .nav-arrow.prev {
+        left: 20px;
+      }
+      .nav-arrow.next {
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calendly-card">
+    <!-- Top-right corner Powered by Calendly badge -->
+    <div class="ribbon-wrapper">
+      <div class="ribbon">
+        <span class="ribbon-sub">POWERED BY</span>
+        <span class="ribbon-brand">Calendly</span>
+      </div>
+    </div>
+
+    <!-- Left Column: Details -->
+    <div class="details-column">
+      <div class="details-content">
+        <div class="host-name">Harsh Gupta</div>
+        <h1 class="event-title">wealth multiplication via agri land investments</h1>
+        
+        <div class="duration-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>30 min</span>
+        </div>
+
+        <div class="description-section">
+          <p>
+            <strong class="section-header" style="display:block;">Before you book: this call is not with a land broker.</strong>
+            If the phrase "wealth multiplication through land" doesn't already make sense to you, please don't book &mdash; it'll save us both time.
+          </p>
+
+          <p>
+            <strong class="section-header" style="display:block;">Who this is for?</strong>
+            Professionals who already earn well and have outgrown mutual funds or standard flat. You're looking at physical agricultural land as a way to grow wealth faster &mdash; targeting 25% CAGR.
+          </p>
+
+          <p>
+            <strong class="section-header" style="display:block;">Who this isn't for?</strong>
+            You are looking for "get-rich-quick" schemes, risky trading tips, or aren't ready to invest in solid, long-term assets or do not have capital to deploy within 30 days. I do not work with people who are just looking for free advice or window shopping.
+          </p>
+
+          <p>
+            <strong class="section-header" style="display:block;">What we'll actually do on the call:</strong>
+          </p>
+          <ol>
+            <li>
+              <strong>Audit your current portfolio</strong> &mdash; find out where your money is underperforming.
+            </li>
+            <li>
+              <strong>Understand your goals and risk appetite</strong> &mdash; so any recommendation actually fits your situation, not a generic pitch.
+            </li>
+            <li>
+              <strong>Walk through the land-investment model</strong> &mdash; how we identify and secure lands in emerging areas that deliver 3-4x returns in a 5-7 year window.
+            </li>
+          </ol>
+
+          <p>
+            <strong class="section-header" style="display:block;">Logistics</strong>
+            I take these calls personally, which means I can only offer 15 slots a month. Please join on time and somewhere quiet.
+          </p>
+
+          <p>
+            <strong>If there is a no-show, rebooking the call will cost ₹5,000.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="#cookie-settings">Cookie settings</a>
+        <a href="#privacy-policy">Privacy Policy</a>
+      </div>
+    </div>
+
+    <!-- Right Column: Calendar Date & Time -->
+    <div class="calendar-column">
+      <h2 class="calendar-header-title">Select a Date & Time</h2>
+
+      <!-- Month Navigation -->
+      <div class="month-nav">
+        <button class="nav-arrow prev" title="Previous Month" aria-label="Previous Month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <span class="current-month" id="monthDisplay">August 2026</span>
+        <button class="nav-arrow next" title="Next Month" aria-label="Next Month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Calendar Days -->
+      <div class="calendar-grid">
+        <!-- Weekday Headers -->
+        <div class="weekday-header">Mon</div>
+        <div class="weekday-header">Tue</div>
+        <div class="weekday-header">Wed</div>
+        <div class="weekday-header">Thu</div>
+        <div class="weekday-header">Fri</div>
+        <div class="weekday-header">Sat</div>
+        <div class="weekday-header">Sun</div>
+
+        <!-- Week 1 (Aug 2026 starts on Sat 1st) -->
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"><span class="day-number">1</span></div>
+        <div class="calendar-day-cell"><span class="day-number">2</span></div>
+
+        <!-- Week 2 -->
+        <div class="calendar-day-cell"><span class="day-number">3</span></div>
+        <div class="calendar-day-cell"><span class="day-number">4</span></div>
+        <div class="calendar-day-cell"><span class="day-number">5</span></div>
+        <div class="calendar-day-cell"><span class="day-number">6</span></div>
+        <div class="calendar-day-cell"><span class="day-number">7</span></div>
+        <div class="calendar-day-cell"><span class="day-number">8</span></div>
+        <div class="calendar-day-cell"><span class="day-number">9</span></div>
+
+        <!-- Week 3 -->
+        <div class="calendar-day-cell"><span class="day-number">10</span></div>
+        <div class="calendar-day-cell"><span class="day-number">11</span></div>
+        <div class="calendar-day-cell"><span class="day-number">12</span></div>
+        <div class="calendar-day-cell"><span class="day-number">13</span></div>
+        <div class="calendar-day-cell"><span class="day-number">14</span></div>
+        <div class="calendar-day-cell">
+          <div class="day-number has-today-dot">
+            15
+            <span class="today-dot"></span>
+          </div>
+        </div>
+        <div class="calendar-day-cell"><span class="day-number">16</span></div>
+
+        <!-- Week 4 -->
+        <div class="calendar-day-cell">
+          <button class="day-btn" data-day="17">17</button>
+        </div>
+        <div class="calendar-day-cell">
+          <button class="day-btn" data-day="18">18</button>
+        </div>
+        <div class="calendar-day-cell"><span class="day-number">19</span></div>
+        <div class="calendar-day-cell"><span class="day-number">20</span></div>
+        <div class="calendar-day-cell"><span class="day-number">21</span></div>
+        <div class="calendar-day-cell"><span class="day-number">22</span></div>
+        <div class="calendar-day-cell"><span class="day-number">23</span></div>
+
+        <!-- Week 5 -->
+        <div class="calendar-day-cell">
+          <button class="day-btn" data-day="24">24</button>
+        </div>
+        <div class="calendar-day-cell">
+          <button class="day-btn" data-day="25">25</button>
+        </div>
+        <div class="calendar-day-cell"><span class="day-number">26</span></div>
+        <div class="calendar-day-cell">
+          <button class="day-btn active-bordered" data-day="27">27</button>
+        </div>
+        <div class="calendar-day-cell"><span class="day-number">28</span></div>
+        <div class="calendar-day-cell"><span class="day-number">29</span></div>
+        <div class="calendar-day-cell"><span class="day-number">30</span></div>
+
+        <!-- Week 6 -->
+        <div class="calendar-day-cell">
+          <button class="day-btn" data-day="31">31</button>
+        </div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+        <div class="calendar-day-cell"></div>
+      </div>
+
+      <!-- Interactive Time slots when clicked -->
+      <div class="slots-modal" id="slotsPanel">
+        <div class="slots-title" id="selectedDateText">Available times for August 27, 2026:</div>
+        <div class="slots-grid">
+          <button class="time-slot-btn">10:00am</button>
+          <button class="time-slot-btn">11:30am</button>
+          <button class="time-slot-btn">2:00pm</button>
+          <button class="time-slot-btn">4:30pm</button>
+        </div>
+      </div>
+
+      <!-- Timezone -->
+      <div class="timezone-section">
+        <div class="timezone-label">Time zone</div>
+        <div class="timezone-dropdown-trigger" id="timezoneBtn">
+          <!-- Globe icon -->
+          <svg class="globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span id="tzLabel">India Standard Time (2:35pm)</span>
+          <!-- Dropdown caret -->
+          <svg class="caret-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 10l5 5 5-5z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Interactivity: selecting available dates
+    const dayButtons = document.querySelectorAll('.day-btn');
+    const slotsPanel = document.getElementById('slotsPanel');
+    const selectedDateText = document.getElementById('selectedDateText');
+
+    dayButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dayButtons.forEach(b => {
+          b.classList.remove('selected');
+          b.classList.remove('active-bordered');
+        });
+        btn.classList.add('selected');
+        
+        const day = btn.getAttribute('data-day');
+        selectedDateText.textContent = `Available times for August ${day}, 2026:`;
+        slotsPanel.classList.add('active');
+      });
+    });
+
+    // Time slots selection
+    document.querySelectorAll('.time-slot-btn').forEach(slot => {
+      slot.addEventListener('click', () => {
+        alert(`You selected the ${slot.textContent.trim()} slot!`);
+      });
+    });
+
+    // Update time dynamically in timezone string if desired
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      document.getElementById('tzLabel').textContent = `India Standard Time (${hours}:${minutes}${ampm})`;
+    }
+    updateClock();
+    setInterval(updateClock, 60000);
+  </script>
+</body>
+</html>
